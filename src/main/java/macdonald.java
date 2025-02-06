@@ -2,45 +2,46 @@ import java.util.Scanner;
 
 public class macdonald {
     private static final int MAX_SIZE = 100;
+    private static final String LINE = "___________________________________________________________";
     private static final Task[] tasks = new Task[MAX_SIZE];
     private static int taskCount = 0;
 
     public static void listTasks() {
-        System.out.println("___________________________________________________________");
+        System.out.println(LINE);
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             System.out.println((i + 1) + ". " + tasks[i]);
         }
-        System.out.println("___________________________________________________________");
+        System.out.println(LINE);
     }
 
     public static void markTask(int index) {
         if (index >= 1 && index <= taskCount) {
             tasks[index - 1].markAsDone();
-            System.out.println("___________________________________________________________");
+            System.out.println(LINE);
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(" " + tasks[index - 1]);
-            System.out.println("___________________________________________________________");
+            System.out.println(LINE);
         }
     }
 
     public static void unmarkTask(int index) {
         if (index >= 1 && index <= taskCount) {
             tasks[index - 1].markAsNotDone();
-            System.out.println("___________________________________________________________");
+            System.out.println(LINE);
             System.out.println("Ok, I've marked this task as not done yet:");
             System.out.println(" " + tasks[index - 1]);
-            System.out.println("___________________________________________________________");
+            System.out.println(LINE);
         }
     }
 
     public static void addTask(String description) {
         if (taskCount < MAX_SIZE) {
             tasks[taskCount++] = new Todo(description);
-            System.out.println("____________________________________________________________");
+            System.out.println(LINE);
             System.out.println("Got it. I've added this task:");
             System.out.println("  " + tasks[taskCount - 1]);
-            System.out.println("____________________________________________________________");
+            System.out.println(LINE);
         } else {
             System.out.println(" Task list is full! No more money to buy cheeseburger liao...");
         }
@@ -61,10 +62,10 @@ public class macdonald {
 
         if (taskCount < MAX_SIZE) {
             tasks[taskCount++] = new Deadline(input, by);
-            System.out.println("____________________________________________________________");
+            System.out.println(LINE);
             System.out.println("Got it. I've added this task:");
             System.out.println("  " + tasks[taskCount - 1]);
-            System.out.println("____________________________________________________________");
+            System.out.println(LINE);
         } else {
             System.out.println(" Task list is full! No more money to buy cheeseburger liao...");
         }
@@ -90,10 +91,10 @@ public class macdonald {
 
         if (taskCount < MAX_SIZE) {
             tasks[taskCount++] = new Event(input, from, to);
-            System.out.println("____________________________________________________________");
+            System.out.println(LINE);
             System.out.println("Got it. I've added this task:");
             System.out.println("  " + tasks[taskCount - 1]);
-            System.out.println("____________________________________________________________");
+            System.out.println(LINE);
         } else {
             System.out.println(" Task list is full! No more money to buy cheeseburger liao...");
         }
@@ -103,16 +104,16 @@ public class macdonald {
         String chatbotName = "macdonald";
         System.out.println("Welcome to " + chatbotName + ", what can I do for you?");
         System.out.println("Input 'list' to view existing list or add a new Todo");
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE);
         Scanner in = new Scanner(System.in);
 
         while (true) {
             String input = in.nextLine();
 
             if (input.equalsIgnoreCase("bye")) {
-                System.out.println("____________________________________________________________");
+                System.out.println(LINE);
                 System.out.println(" Have a pleasant day ahead, de de deng deng deng!");
-                System.out.println("____________________________________________________________");
+                System.out.println(LINE);
                 break;
             } else if (input.equalsIgnoreCase("list")) {
                 listTasks();
