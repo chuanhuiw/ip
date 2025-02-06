@@ -100,6 +100,11 @@ public class macdonald {
     }
 
     public static void main(String[] args) {
+        /*
+         * Prints the introduction message for the macdonald assistant.
+         *
+         * @param chatbotName The name of the assistant.
+         */
         String chatbotName = "macdonald";
         System.out.println("Welcome to " + chatbotName + ", what can I do for you?");
         System.out.println("Input 'list' to view existing list or add a new Todo");
