@@ -19,7 +19,6 @@ public class Task {
         this.isDone = false;
     }
 
-    //returns task string with status
     @Override
     public String toString() {
         return "[" + getStatus() + "] " + description;
