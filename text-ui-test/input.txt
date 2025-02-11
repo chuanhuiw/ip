@@ -1,0 +1,6 @@
+list
+todo sleep
+deadline eat /by 12pm
+event study /from 2pm /to 6pm
+list
+bye
