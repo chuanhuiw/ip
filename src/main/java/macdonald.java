@@ -34,7 +34,10 @@ public class macdonald {
         }
     }
 
-    public static void addTask(String description) {
+    public static void addTask(String description) throws macdonaldException {
+        if (description.isEmpty()) {
+            throw new macdonaldException("Oh no! Your todo order cannot be empty.");
+        }
         if (taskCount < MAX_SIZE) {
             tasks[taskCount++] = new Todo(description);
             System.out.println("____________________________________________________________");
@@ -42,21 +45,19 @@ public class macdonald {
             System.out.println("  " + tasks[taskCount - 1]);
             System.out.println("____________________________________________________________");
         } else {
-            System.out.println(" Task list is full! No more money to buy cheeseburger liao...");
+            throw new macdonaldException("Your order Task list is full! No more cheeseburger in stock liao...");
         }
     }
 
-    public static void addDeadline(String description) {
+    public static void addDeadline(String description) throws macdonaldException {
         int byIndex = description.indexOf("/by");
         if (byIndex == -1) {
-            System.out.println("Invalid deadline format! Use: deadline <task> /by <time>");
-            return;
+            throw new macdonaldException("Invalid deadline format! Use: deadline <task> /by <time>");
         }
         String input = description.substring(9, byIndex).trim();
         String by = description.substring(byIndex + 4).trim();
         if (input.isEmpty() || by.isEmpty()) {
-            System.out.println("Invalid deadline format! Task and date must not be empty.");
-            return;
+            throw new macdonaldException("Invalid deadline format! Your order for Task and date must not be empty.");
         }
 
         if (taskCount < MAX_SIZE) {
@@ -66,17 +67,16 @@ public class macdonald {
             System.out.println("  " + tasks[taskCount - 1]);
             System.out.println("____________________________________________________________");
         } else {
-            System.out.println(" Task list is full! No more money to buy cheeseburger liao...");
+            throw new macdonaldException("Your order Task list is full! No more cheeseburger in stock liao...");
         }
     }
 
-    public static void addEvent(String description) {
+    public static void addEvent(String description) throws macdonaldException {
         int fromIndex = description.indexOf("/from");
         int toIndex = description.indexOf("/to");
 
         if (fromIndex == -1 || toIndex == -1) {
-            System.out.println("Invalid event format! Use: event <task> /from <start> /to <end>");
-            return;
+            throw new macdonaldException("Invalid event format! Use: event <task> /from <start> /to <end>");
         }
 
         String input = description.substring(6, fromIndex).trim();
@@ -84,8 +84,7 @@ public class macdonald {
         String to = description.substring(toIndex + 4).trim();
 
         if (input.isEmpty() || from.isEmpty() || to.isEmpty()) {
-            System.out.println("Invalid event format! Task, start, and end time must not be empty.");
-            return;
+            throw new macdonaldException("Invalid event format! Task, start, and end time must not be empty.");
         }
 
         if (taskCount < MAX_SIZE) {
@@ -95,7 +94,7 @@ public class macdonald {
             System.out.println("  " + tasks[taskCount - 1]);
             System.out.println("____________________________________________________________");
         } else {
-            System.out.println(" Task list is full! No more money to buy cheeseburger liao...");
+            throw new macdonaldException("Your order Task list is full! No more cheeseburger in stock liao...");
         }
     }
 
@@ -112,29 +111,43 @@ public class macdonald {
         Scanner in = new Scanner(System.in);
 
         while (true) {
-            String input = in.nextLine();
+            try {
+                String input = in.nextLine();
 
-            if (input.equalsIgnoreCase("bye")) {
+                if (input.equalsIgnoreCase("bye")) {
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" Have a pleasant day ahead, de de deng deng deng!");
+                    System.out.println("____________________________________________________________");
+                    break;
+                } else if (input.equalsIgnoreCase("list")) {
+                    listTasks();
+                } else if (input.startsWith("mark ")) {
+                    int index = Integer.parseInt(input.substring(5));
+                    markTask(index);
+                } else if (input.startsWith("unmark ")) {
+                    int index = Integer.parseInt(input.substring(7));
+                    unmarkTask(index);
+                } else if (input.startsWith("todo ")) {
+                    addTask(input.substring(5).trim());
+                } else if (input.startsWith("deadline ")) {
+                    addDeadline(input);
+                } else if (input.startsWith("event ")) {
+                    addEvent(input);
+                } else {
+                    throw new macdonaldException("Unknown order! Try 'todo', 'deadline', 'event', 'list', 'mark', or 'unmark'.");
+                }
+            } catch (macdonaldException e) {
                 System.out.println("____________________________________________________________");
-                System.out.println(" Have a pleasant day ahead, de de deng deng deng!");
+                System.out.println(" ERROR: " + e.getMessage());
                 System.out.println("____________________________________________________________");
-                break;
-            } else if (input.equalsIgnoreCase("list")) {
-                listTasks();
-            } else if (input.startsWith("mark ")) {
-                int index = Integer.parseInt(input.substring(5));
-                markTask(index);
-            } else if (input.startsWith("unmark ")) {
-                int index = Integer.parseInt(input.substring(7));
-                unmarkTask(index);
-            } else if (input.startsWith("todo ")) {
-                addTask(input.substring(5).trim());
-            } else if (input.startsWith("deadline ")) {
-                addDeadline(input);
-            } else if (input.startsWith("event ")) {
-                addEvent(input);
-            } else {
-                System.out.println("Unknown order! Try 'todo', 'deadline', 'event', 'list', 'mark', or 'unmark'.");
+            } catch (NumberFormatException e) {
+                System.out.println("____________________________________________________________");
+                System.out.println(" ERROR: Invalid number format. Please enter a valid task number.");
+                System.out.println("____________________________________________________________");
+            } catch (Exception e) {
+                System.out.println("____________________________________________________________");
+                System.out.println(" ERROR: An unexpected error occurred: " + e.getMessage());
+                System.out.println("____________________________________________________________");
             }
         }
 
