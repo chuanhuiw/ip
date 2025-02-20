@@ -42,14 +42,8 @@ public class macdonald {
 
     public static void deleteTask(int index) {
         if (index >= 1 && index <= tasks.size()) {
-            Task removedTask = tasks.remove(index - 1);
-            System.out.println(line);
-            System.out.println("Ok! I've removed this task:");
-            System.out.println("  " + removedTask);
-            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-            System.out.println(line);
-        } else {
-            System.out.println("Invalid task number.");
+            tasks.remove(index - 1);
+            Storage.saveTasks(tasks);
         }
     }
 
@@ -58,6 +52,8 @@ public class macdonald {
             throw new macdonaldException("Oh no! Your todo order cannot be empty.");
         }
         tasks.add(new Todo(description));
+        Storage.saveTasks(tasks);
+
         System.out.println(line);
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + tasks.get(tasks.size() - 1));
@@ -109,7 +105,11 @@ public class macdonald {
         String chatbotName = "macdonald";
         System.out.println("Welcome to " + chatbotName + ", what can I do for you?");
         System.out.println("Input 'list' to view existing list or add a new Todo");
-        System.out.println(line);
+        System.out.println("____________________________________________________________");
+        // ** Load saved tasks from file when the program starts **
+        tasks.addAll(Storage.loadTasks());
+        System.out.println("Loaded " + tasks.size() + " tasks from file.");
+
         Scanner in = new Scanner(System.in);
 
         while (true) {
@@ -117,9 +117,9 @@ public class macdonald {
                 String input = in.nextLine();
 
                 if (input.equalsIgnoreCase("bye")) {
-                    System.out.println(line);
+                    System.out.println("____________________________________________________________");
                     System.out.println(" Have a pleasant day ahead, de de deng deng deng!");
-                    System.out.println(line);
+                    System.out.println("____________________________________________________________");
                     break;
                 } else if (input.equalsIgnoreCase("list")) {
                     listTasks();
@@ -142,20 +142,21 @@ public class macdonald {
                     throw new macdonaldException("Unknown order! Try 'todo', 'deadline', 'event', 'list', 'mark', or 'unmark'.");
                 }
             } catch (macdonaldException e) {
-                System.out.println(line);
+                System.out.println("____________________________________________________________");
                 System.out.println(" ERROR: " + e.getMessage());
-                System.out.println(line);
+                System.out.println("____________________________________________________________");
             } catch (NumberFormatException e) {
-                System.out.println(line);
+                System.out.println("____________________________________________________________");
                 System.out.println(" ERROR: Invalid number format. Please enter a valid task number.");
-                System.out.println(line);
+                System.out.println("____________________________________________________________");
             } catch (Exception e) {
-                System.out.println(line);
+                System.out.println("____________________________________________________________");
                 System.out.println(" ERROR: An unexpected error occurred: " + e.getMessage());
-                System.out.println(line);
+                System.out.println("____________________________________________________________");
             }
         }
 
         in.close();
     }
 }
+
