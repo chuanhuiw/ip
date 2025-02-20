@@ -1,36 +1,55 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class macdonald {
-    private static final int MAX_SIZE = 100;
-    private static final Task[] tasks = new Task[MAX_SIZE];
-    private static int taskCount = 0;
+    private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static final String line = "___________________________________________________________";
 
     public static void listTasks() {
-        System.out.println("___________________________________________________________");
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". " + tasks[i]);
+        System.out.println(line);
+        if (tasks.isEmpty()) {
+            System.out.println("Your task list is empty.");
+        } else {
+            System.out.println("Here are the tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i + 1) + ". " + tasks.get(i));
+            }
         }
-        System.out.println("___________________________________________________________");
+        System.out.println(line);
     }
 
     public static void markTask(int index) {
-        if (index >= 1 && index <= taskCount) {
-            tasks[index - 1].markAsDone();
-            System.out.println("___________________________________________________________");
+        if (index >= 1 && index <= tasks.size()) {
+            tasks.get(index - 1).markAsDone();
+            System.out.println(line);
             System.out.println("Nice! I've marked this task as done:");
-            System.out.println(" " + tasks[index - 1]);
-            System.out.println("___________________________________________________________");
+            System.out.println(" " + tasks.get(index - 1));
+            System.out.println(line);
+        } else {
+            System.out.println("Your task is not in the list.");
         }
     }
 
     public static void unmarkTask(int index) {
-        if (index >= 1 && index <= taskCount) {
-            tasks[index - 1].markAsNotDone();
-            System.out.println("___________________________________________________________");
+        if (index >= 1 && index <= tasks.size()) {
+            tasks.get(index - 1).markAsNotDone();
+            System.out.println(line);
             System.out.println("Ok, I've marked this task as not done yet:");
-            System.out.println(" " + tasks[index - 1]);
-            System.out.println("___________________________________________________________");
+            System.out.println(" " + tasks.get(index - 1));
+            System.out.println(line);
+        }
+    }
+
+    public static void deleteTask(int index) {
+        if (index >= 1 && index <= tasks.size()) {
+            Task removedTask = tasks.remove(index - 1);
+            System.out.println(line);
+            System.out.println("Ok! I've removed this task:");
+            System.out.println("  " + removedTask);
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println(line);
+        } else {
+            System.out.println("Invalid task number.");
         }
     }
 
@@ -38,15 +57,11 @@ public class macdonald {
         if (description.isEmpty()) {
             throw new macdonaldException("Oh no! Your todo order cannot be empty.");
         }
-        if (taskCount < MAX_SIZE) {
-            tasks[taskCount++] = new Todo(description);
-            System.out.println("____________________________________________________________");
-            System.out.println("Got it. I've added this task:");
-            System.out.println("  " + tasks[taskCount - 1]);
-            System.out.println("____________________________________________________________");
-        } else {
-            throw new macdonaldException("Your order Task list is full! No more cheeseburger in stock liao...");
-        }
+        tasks.add(new Todo(description));
+        System.out.println(line);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + tasks.get(tasks.size() - 1));
+        System.out.println(line);
     }
 
     public static void addDeadline(String description) throws macdonaldException {
@@ -59,43 +74,30 @@ public class macdonald {
         if (input.isEmpty() || by.isEmpty()) {
             throw new macdonaldException("Invalid deadline format! Your order for Task and date must not be empty.");
         }
-
-        if (taskCount < MAX_SIZE) {
-            tasks[taskCount++] = new Deadline(input, by);
-            System.out.println("____________________________________________________________");
-            System.out.println("Got it. I've added this task:");
-            System.out.println("  " + tasks[taskCount - 1]);
-            System.out.println("____________________________________________________________");
-        } else {
-            throw new macdonaldException("Your order Task list is full! No more cheeseburger in stock liao...");
-        }
+        tasks.add(new Deadline(input, by));
+        System.out.println(line);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + tasks.get(tasks.size() - 1));
+        System.out.println(line);
     }
 
     public static void addEvent(String description) throws macdonaldException {
         int fromIndex = description.indexOf("/from");
         int toIndex = description.indexOf("/to");
-
         if (fromIndex == -1 || toIndex == -1) {
             throw new macdonaldException("Invalid event format! Use: event <task> /from <start> /to <end>");
         }
-
         String input = description.substring(6, fromIndex).trim();
         String from = description.substring(fromIndex + 6, toIndex).trim();
         String to = description.substring(toIndex + 4).trim();
-
         if (input.isEmpty() || from.isEmpty() || to.isEmpty()) {
             throw new macdonaldException("Invalid event format! Task, start, and end time must not be empty.");
         }
-
-        if (taskCount < MAX_SIZE) {
-            tasks[taskCount++] = new Event(input, from, to);
-            System.out.println("____________________________________________________________");
-            System.out.println("Got it. I've added this task:");
-            System.out.println("  " + tasks[taskCount - 1]);
-            System.out.println("____________________________________________________________");
-        } else {
-            throw new macdonaldException("Your order Task list is full! No more cheeseburger in stock liao...");
-        }
+        tasks.add(new Event(input, from, to));
+        System.out.println(line);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + tasks.get(tasks.size() - 1));
+        System.out.println(line);
     }
 
     public static void main(String[] args) {
@@ -107,7 +109,7 @@ public class macdonald {
         String chatbotName = "macdonald";
         System.out.println("Welcome to " + chatbotName + ", what can I do for you?");
         System.out.println("Input 'list' to view existing list or add a new Todo");
-        System.out.println("____________________________________________________________");
+        System.out.println(line);
         Scanner in = new Scanner(System.in);
 
         while (true) {
@@ -115,9 +117,9 @@ public class macdonald {
                 String input = in.nextLine();
 
                 if (input.equalsIgnoreCase("bye")) {
-                    System.out.println("____________________________________________________________");
+                    System.out.println(line);
                     System.out.println(" Have a pleasant day ahead, de de deng deng deng!");
-                    System.out.println("____________________________________________________________");
+                    System.out.println(line);
                     break;
                 } else if (input.equalsIgnoreCase("list")) {
                     listTasks();
@@ -127,6 +129,9 @@ public class macdonald {
                 } else if (input.startsWith("unmark ")) {
                     int index = Integer.parseInt(input.substring(7));
                     unmarkTask(index);
+                } else if (input.startsWith("delete ")) {
+                    int index = Integer.parseInt(input.substring(7));
+                    deleteTask(index);
                 } else if (input.startsWith("todo ")) {
                     addTask(input.substring(5).trim());
                 } else if (input.startsWith("deadline ")) {
@@ -137,17 +142,17 @@ public class macdonald {
                     throw new macdonaldException("Unknown order! Try 'todo', 'deadline', 'event', 'list', 'mark', or 'unmark'.");
                 }
             } catch (macdonaldException e) {
-                System.out.println("____________________________________________________________");
+                System.out.println(line);
                 System.out.println(" ERROR: " + e.getMessage());
-                System.out.println("____________________________________________________________");
+                System.out.println(line);
             } catch (NumberFormatException e) {
-                System.out.println("____________________________________________________________");
+                System.out.println(line);
                 System.out.println(" ERROR: Invalid number format. Please enter a valid task number.");
-                System.out.println("____________________________________________________________");
+                System.out.println(line);
             } catch (Exception e) {
-                System.out.println("____________________________________________________________");
+                System.out.println(line);
                 System.out.println(" ERROR: An unexpected error occurred: " + e.getMessage());
-                System.out.println("____________________________________________________________");
+                System.out.println(line);
             }
         }
 
