@@ -42,8 +42,18 @@ public class macdonald {
 
     public static void deleteTask(int index) {
         if (index >= 1 && index <= tasks.size()) {
-            tasks.remove(index - 1);
-            Storage.saveTasks(tasks);
+            Task removedTask = tasks.remove(index - 1); // Store the removed task for confirmation
+            Storage.saveTasks(tasks); // Save updated list to file
+
+            System.out.println(line);
+            System.out.println("Noted. I've removed this task:");
+            System.out.println("  " + removedTask);
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println(line);
+        } else {
+            System.out.println(line);
+            System.out.println("ERROR: Invalid task number. Please enter a valid task number.");
+            System.out.println(line);
         }
     }
 
@@ -118,6 +128,9 @@ public class macdonald {
 
                 if (input.equalsIgnoreCase("bye")) {
                     System.out.println("____________________________________________________________");
+                    System.out.println("Saving tasks before exit...");
+                    Storage.saveTasks(tasks); // Save tasks before quitting
+                    System.out.println("Tasks saved successfully!");
                     System.out.println(" Have a pleasant day ahead, de de deng deng deng!");
                     System.out.println("____________________________________________________________");
                     break;

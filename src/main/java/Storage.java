@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Storage {
-    private static final String FILE_PATH = "./data/macdonald.txt";
+    private static final String FILE_PATH = System.getProperty("user.home") + "/macdonald_tasks.txt";
 
     public static void saveTasks(ArrayList<Task> tasks) {
             File file = new File(FILE_PATH);
@@ -25,6 +25,7 @@ public class Storage {
     public static ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(FILE_PATH);
+        System.out.println(file.getAbsolutePath());
 
         if (!file.exists()) {
             return tasks; // Return empty list if file doesn't exist
