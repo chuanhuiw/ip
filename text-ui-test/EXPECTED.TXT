@@ -1,5 +1,5 @@
 Welcome to macdonald, what can I do for you?
-Input 'list' to view existing list or add a new Todo
+Input 'list' to view existing list or add a new TaskList.Todo
 ____________________________________________________________
 ___________________________________________________________
 Here are the tasks in your list:

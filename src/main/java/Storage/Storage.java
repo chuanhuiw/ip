@@ -1,3 +1,10 @@
+package Storage;
+
+import TaskList.Deadline;
+import TaskList.Event;
+import TaskList.Task;
+import TaskList.Todo;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -5,27 +12,28 @@ public class Storage {
     private static final String FILE_PATH = System.getProperty("user.home") + "/macdonald_tasks.txt";
 
     public static void saveTasks(ArrayList<Task> tasks) {
-            File file = new File(FILE_PATH);
-            File parentDir = file.getParentFile();
+        File file = new File(FILE_PATH);
+        File parentDir = file.getParentFile();
 
-            if (parentDir != null && !parentDir.exists() && !parentDir.mkdirs()) {
-                System.out.println("WARNING: Failed to create data folder.");
-            }
+        if (parentDir != null && !parentDir.exists() && !parentDir.mkdirs()) {
+            System.out.println("WARNING: Failed to create data folder.");
+        }
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                for (Task task : tasks) {
-                    writer.write(task.toFileFormat());
-                    writer.newLine();
-                }
-            } catch (IOException e) {
-                System.out.println("ERROR: Unable to save tasks.");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (Task task : tasks) {
+                writer.write(task.toFileFormat());
+                writer.newLine();
             }
+        } catch (IOException e) {
+            System.out.println("ERROR: Unable to save tasks.");
+        }
     }
 
     public static ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(FILE_PATH);
-        System.out.println(file.getAbsolutePath());
+        //System.out.print("Here is your file path: ");
+        //System.out.println(file.getAbsolutePath());
 
         if (!file.exists()) {
             return tasks; // Return empty list if file doesn't exist
@@ -82,4 +90,3 @@ public class Storage {
         return null; // Invalid format
     }
 }
-
