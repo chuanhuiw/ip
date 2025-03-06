@@ -5,6 +5,7 @@ import Exceptions.macdonaldException;
 import TaskList.Todo;
 import TaskList.Deadline;
 import TaskList.Event;
+import Commands.FindCommand;
 
 public class Parser {
     public static void parseCommand(String input, TaskList tasks) throws macdonaldException {
@@ -26,6 +27,8 @@ public class Parser {
             tasks.unmarkTask(parseIndex(input, 7));
         } else if (input.startsWith("delete ")) {
             tasks.deleteTask(parseIndex(input, 7));
+        } else if (input.startsWith("find ")) {
+            FindCommand.execute(tasks, input.substring(5).trim());
         } else {
             throw new macdonaldException("Unknown command! Use 'todo', 'deadline', 'event', 'mark', 'unmark', 'delete', or 'list'.");
         }
