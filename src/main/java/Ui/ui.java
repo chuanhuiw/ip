@@ -98,4 +98,25 @@ public class ui {
     public static void printTaskLoadMessage(int taskCount) {
         System.out.println("Loaded " + taskCount + " tasks.");
     }
+
+    /**
+     * Prints the tasks that match a specific criteria to the console.
+     * If the list of tasks is empty, it informs the user that no matching tasks were found.
+     * Otherwise, it prints the matching tasks with their index in the list.
+     * 
+     * @param tasks The list of tasks to be printed, which are assumed to match some criteria.
+     */
+    public static void printMatchingTasks(List<Task> tasks) {
+        System.out.println(line);
+        if (tasks.isEmpty()) {  // Use 'tasks' instead of 'matchingTasks'
+            System.out.println("No matching orders found.");
+        } else {
+            System.out.println("Here are the matching orders in your list:");
+            for (int i = 0; i < tasks.size(); i++) {  // Use 'tasks' instead of 'matchingTasks'
+                System.out.println((i + 1) + ". " + tasks.get(i));
+            }
+        }
+        System.out.println(line);
+    }
+
 }

@@ -7,6 +7,7 @@ import Exceptions.macdonaldException;
 import Storage.Storage;
 import Ui.ui;
 
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -76,4 +77,15 @@ public class TaskList {
         UnmarkCommand.execute(tasks, index);
         saveTasks();
     }
+
+    /**
+     * Returns a copy of the list of tasks to prevent external modification.
+     * By returning a new ArrayList, the internal task list cannot be modified directly by external code.
+     * 
+     * @return A new ArrayList containing all the tasks in the list.
+     */
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks); // Returns a copy to prevent external modification
+    }
 }
+

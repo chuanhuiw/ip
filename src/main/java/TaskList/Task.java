@@ -25,7 +25,17 @@ public abstract class Task {
         this.description = description;
         this.isDone = isDone;
     }
-
+  
+    /**
+     * Returns the description of the task.
+     * This method retrieves the description that provides details about the task.
+     * 
+     * @return The description of the task.
+     */
+    public String getDescription() { 
+        return description; 
+    }
+  
     /**
      * Returns the status of the task.
      * @return "X" if done, otherwise a space.
