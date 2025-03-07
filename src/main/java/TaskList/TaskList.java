@@ -7,6 +7,7 @@ import Exceptions.macdonaldException;
 import Storage.Storage;
 import Ui.ui;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -44,5 +45,9 @@ public class TaskList {
     public void unmarkTask(int index) throws macdonaldException {
         UnmarkCommand.execute(tasks, index);
         saveTasks();
+    }
+
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks); // Returns a copy to prevent external modification
     }
 }
