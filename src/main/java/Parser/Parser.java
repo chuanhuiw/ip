@@ -6,7 +6,16 @@ import TaskList.Todo;
 import TaskList.Deadline;
 import TaskList.Event;
 
+/**
+ * Parses user input and executes commands accordingly.
+ */
 public class Parser {
+    /**
+     * Parses the given command and executes it on the task list.
+     * @param input The user command input.
+     * @param tasks The task list to operate on.
+     * @throws macdonaldException If the command format is invalid.
+     */
     public static void parseCommand(String input, TaskList tasks) throws macdonaldException {
         if (input.equalsIgnoreCase("list")) {
             tasks.listTasks();
@@ -31,6 +40,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Extracts the task index from a command input.
+     * @param input The command string.
+     * @param prefixLength The length of the command prefix.
+     * @return The parsed index.
+     * @throws macdonaldException If the index is not a valid number.
+     */
     private static int parseIndex(String input, int prefixLength) throws macdonaldException {
         try {
             return Integer.parseInt(input.substring(prefixLength).trim()) - 1;
