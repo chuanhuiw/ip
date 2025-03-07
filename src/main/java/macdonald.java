@@ -5,9 +5,16 @@ import Ui.ui;
 
 import java.util.Scanner;
 
+/**
+ * The main class for the macdonald task management application.
+ */
 public class macdonald {
     private static final TaskList tasks = new TaskList();
 
+    /**
+     * The entry point of the application.
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         ui.printWelcomeMessage();
 

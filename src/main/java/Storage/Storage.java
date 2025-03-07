@@ -8,9 +8,16 @@ import TaskList.Todo;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Handles loading and saving tasks to a file.
+ */
 public class Storage {
     private static final String FILE_PATH = System.getProperty("user.home") + "/macdonald_tasks.txt";
 
+    /**
+     * Saves the list of tasks to a file.
+     * @param tasks The list of tasks to save.
+     */
     public static void saveTasks(ArrayList<Task> tasks) {
         File file = new File(FILE_PATH);
         File parentDir = file.getParentFile();
@@ -29,11 +36,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the file.
+     * @return A list of tasks loaded from the file.
+     */
     public static ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(FILE_PATH);
-        //System.out.print("Here is your file path: ");
-        //System.out.println(file.getAbsolutePath());
 
         if (!file.exists()) {
             return tasks; // Return empty list if file doesn't exist
@@ -62,6 +71,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Parses a line from the file and converts it into a Task object.
+     * @param line The line containing task data.
+     * @return The corresponding Task object, or null if the data is invalid.
+     */
     private static Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) {
