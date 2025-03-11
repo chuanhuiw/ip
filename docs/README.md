@@ -16,6 +16,7 @@ Here is a condensed table with all the commands available:
 | `unmark`       | Unmarks a task (marks it as not done). | `unmark 1` | `Marked as not done: [T][ ] Buy groceries` |
 | `delete`       | Deletes a task from the list. | `delete 2` | `Deleted: [D][ ] Submit report` |
 | `find`         | Searches for tasks with a keyword. | `find report` | `Here are the matching tasks: 1. [D][ ] Submit report` |
+| `bye`          | Exits the application with a farewell message. | `bye` | `DE DE DE DENG DENG! Goodbye! Have a great day!` |
 
 ## Storage
 - All tasks are automatically saved to `macdonald_tasks.txt` and loaded upon startup.
